@@ -1,8 +1,10 @@
 package jason.springframework.sdjpaintro;
 
 import jason.springframework.sdjpaintro.domain.AuthorUuid;
+import jason.springframework.sdjpaintro.domain.BookNatural;
 import jason.springframework.sdjpaintro.domain.BookUuid;
 import jason.springframework.sdjpaintro.repositories.AuthorUuidRepository;
+import jason.springframework.sdjpaintro.repositories.BookNaturalRepository;
 import jason.springframework.sdjpaintro.repositories.BookRepository;
 import jason.springframework.sdjpaintro.repositories.BookUuidRepository;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,19 @@ public class MySQLIntegrationTest {
 
     @Autowired
     BookUuidRepository bookUuidRepository;
+
+    @Autowired
+    BookNaturalRepository bookNaturalRepository;
+
+    @Test
+    void testBookNatural() {
+        BookNatural bookNatural = new BookNatural();
+        bookNatural.setTitle("My Book");
+        BookNatural saved = bookNaturalRepository.save(bookNatural);
+
+        BookNatural fetched = bookNaturalRepository.getById(saved.getTitle());
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void testSavedBookUuid() {
