@@ -1,6 +1,10 @@
 package jason.springframework.sdjpaintro;
 
+import jason.springframework.sdjpaintro.domain.AuthorUuid;
+import jason.springframework.sdjpaintro.domain.BookUuid;
+import jason.springframework.sdjpaintro.repositories.AuthorUuidRepository;
 import jason.springframework.sdjpaintro.repositories.BookRepository;
+import jason.springframework.sdjpaintro.repositories.BookUuidRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,6 +22,32 @@ public class MySQLIntegrationTest {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    AuthorUuidRepository authorUuidRepository;
+
+    @Autowired
+    BookUuidRepository bookUuidRepository;
+
+    @Test
+    void testSavedBookUuid() {
+        BookUuid bookUuid = bookUuidRepository.save(new BookUuid());
+        assertThat(bookUuid).isNotNull();
+        assertThat(bookUuid.getId()).isNotNull();
+
+        BookUuid fetched = bookUuidRepository.getById(bookUuid.getId());
+        assertThat(fetched).isNotNull();
+    }
+
+    @Test
+    void testSaveAuthorUUID() {
+        AuthorUuid authorUuid = authorUuidRepository.save(new AuthorUuid());
+        assertThat(authorUuid).isNotNull();
+        assertThat(authorUuid.getId()).isNotNull();
+
+        AuthorUuid fetched = authorUuidRepository.getById(authorUuid.getId());
+        assertThat(fetched).isNotNull();
+    }
 
     @Test
     void testMySQL() {
